@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.env
+venv/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data (downloaded at runtime)
+data/
+
+# Node
+node_modules/
+package.json
+package-lock.json
+create_docx.js
+
+# Claude Code
+.claude/
+
+# macOS
+.DS_Store
+
+# HuggingFace cache
+.cache/
+
+# Build artifacts
+*.zip

@@ -1,0 +1,16 @@
+Task,Method,Accuracy,Precision,Recall,F1,AUC-ROC
+qa,ROUGE-L,0.7525,0.7935,0.6697,0.7264,0.8174
+qa,Sem. Similarity,0.655,0.6275,0.7299,0.6748,0.7362
+qa,BERTScore,0.745,0.754,0.7125,0.7327,0.8205
+qa,NLI,0.768,0.8646,0.6249,0.7254,0.7951
+qa,Ensemble (Sim+NLI),0.803,0.8208,0.7655,0.7922,0.873
+dialogue,ROUGE-L,0.593,0.5767,0.6402,0.6068,0.6115
+dialogue,Sem. Similarity,0.609,0.6357,0.475,0.5438,0.6564
+dialogue,BERTScore,0.5985,0.5719,0.7217,0.6381,0.6367
+dialogue,NLI,0.637,0.5998,0.7808,0.6785,0.7133
+dialogue,Ensemble (Sim+NLI),0.672,0.6402,0.7564,0.6935,0.7493
+summarisation,ROUGE-L,0.5445,0.5311,0.6096,0.5676,0.563
+summarisation,Sem. Similarity,0.5015,0.4953,0.8552,0.6273,0.5284
+summarisation,BERTScore,0.494,0.4922,0.9908,0.6576,0.4685
+summarisation,NLI,0.5525,0.5328,0.7115,0.6093,0.567
+summarisation,Ensemble (Sim+NLI),0.552,0.5485,0.4903,0.5178,0.5738
