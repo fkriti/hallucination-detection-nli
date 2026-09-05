@@ -6,7 +6,10 @@ os.makedirs("results/metrics", exist_ok=True)
 
 from src.data_loader import TASK_DISPLAY, load_task
 from src.scorers import run_all_scorers
-from src.evaluate import build_results_df, save_metrics, print_classification_reports, build_error_examples
+from src.evaluate import (
+    build_results_df, save_metrics, print_classification_reports,
+    build_error_examples, save_raw_scores,
+)
 from src.visualize import (
     plot_metrics_heatmap, plot_roc_curves,
     plot_confusion_matrices, plot_score_distributions,
@@ -37,6 +40,7 @@ def main():
     print("\nBuilding results table...")
     results_df = build_results_df(task_results)
     save_metrics(results_df, "results/metrics/all_tasks.csv")
+    save_raw_scores(task_results, "results/metrics/raw_scores.json")
     print_classification_reports(task_results)
 
     # ── 3. Figures ───────────────────────────────────────────────────────────

@@ -31,3 +31,10 @@ create_docx.js
 
 # Build artifacts
 *.zip
+
+# One-off run orchestration and scratch outputs
+run_overnight.sh
+run_chunkagg_full.sh
+results/overnight.log
+results/chunkagg_full.log
+results/backup/

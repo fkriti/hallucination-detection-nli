@@ -86,10 +86,15 @@ def _get_nli():
     return _nli_pipeline
 
 
-def nli_scores(df, batch_size=16):
+def nli_scores(df, batch_size=16, max_src=800):
+    """Score with the NLI detector.
+
+    max_src caps how many source characters enter the premise. The default of 800
+    is the setting used for the main results; the truncation ablation varies it.
+    """
     from tqdm import tqdm
     nli = _get_nli()
-    MAX_SRC  = 800
+    MAX_SRC  = max_src
     MAX_CTX  = 200
 
     premises = []

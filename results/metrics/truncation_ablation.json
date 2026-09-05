@@ -1,0 +1,42 @@
+{
+  "model_max_tokens": 1000000000000000019884624838656,
+  "source_chars": {
+    "median": 3458,
+    "mean": 3905,
+    "p90": 6825
+  },
+  "settings": {
+    "400": {
+      "auc_roc": 0.5072,
+      "f1": 0.6489,
+      "accuracy": 0.5195,
+      "threshold": 0.2691,
+      "median_premise_tokens": 85,
+      "frac_hitting_model_limit": 0.0
+    },
+    "800": {
+      "auc_roc": 0.567,
+      "f1": 0.6093,
+      "accuracy": 0.5525,
+      "threshold": 0.5218,
+      "median_premise_tokens": 168,
+      "frac_hitting_model_limit": 0.0
+    },
+    "1600": {
+      "auc_roc": 0.6291,
+      "f1": 0.6105,
+      "accuracy": 0.5975,
+      "threshold": 0.3138,
+      "median_premise_tokens": 329,
+      "frac_hitting_model_limit": 0.0
+    },
+    "3200": {
+      "auc_roc": 0.5765,
+      "f1": 0.6434,
+      "accuracy": 0.53,
+      "threshold": 0.0679,
+      "median_premise_tokens": 629,
+      "frac_hitting_model_limit": 0.0
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "ROUGE-L": {
+    "n": 300,
+    "seconds": 0.33,
+    "per_second": 898.6
+  },
+  "Sem. Similarity": {
+    "n": 300,
+    "seconds": 5.17,
+    "per_second": 58.1
+  },
+  "BERTScore": {
+    "n": 300,
+    "seconds": 4.82,
+    "per_second": 62.2
+  },
+  "NLI": {
+    "n": 200,
+    "seconds": 51.62,
+    "per_second": 3.9
+  },
+  "Ensemble": {
+    "n": 200,
+    "seconds": 54.56,
+    "per_second": 3.7
+  },
+  "_env": {
+    "platform": "macOS-26.2-arm64-arm-64bit",
+    "processor": "arm",
+    "python": "3.9.6"
+  }
+}
