@@ -1,0 +1,4 @@
+Task,Best,Runner-up,ΔAUC,95% CI,Separated
+qa,Ensemble (Sim+NLI),BERTScore,0.052,"[0.032, 0.073]",yes
+dialogue,Ensemble (Sim+NLI),NLI,0.0357,"[0.015, 0.057]",yes
+summarisation,Ensemble (Sim+NLI),NLI,0.0066,"[-0.009, 0.022]",no (CI spans 0)

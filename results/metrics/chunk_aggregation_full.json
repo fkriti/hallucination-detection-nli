@@ -1,0 +1,25 @@
+{
+  "val_n": 1000,
+  "test_n": 2000,
+  "full_splits": true,
+  "median_chunks": 5,
+  "median_cand_sents": 4,
+  "single_pass_nli_800": {
+    "auc_roc": 0.567,
+    "f1": 0.6093,
+    "accuracy": 0.5525,
+    "threshold": 0.5218
+  },
+  "chunk_agg_mean": {
+    "auc_roc": 0.6826,
+    "f1": 0.6226,
+    "accuracy": 0.6345,
+    "threshold": 0.3732
+  },
+  "chunk_agg_min": {
+    "auc_roc": 0.6326,
+    "f1": 0.6479,
+    "accuracy": 0.588,
+    "threshold": 0.6945
+  }
+}

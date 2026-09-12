@@ -39,6 +39,32 @@ def save_metrics(df, out_path):
     print(df.to_string(index=False))
 
 
+def save_raw_scores(task_results, out_path):
+    """Persist per-instance test scores, predictions and labels.
+
+    Aggregate metrics alone cannot support confidence intervals, so we keep the
+    raw per-instance output to allow bootstrap resampling after the fact without
+    re-running any model.
+    """
+    import json
+    payload = {}
+    for task, method_results in task_results.items():
+        labels = method_results["_test_df"]["label"].tolist()
+        methods = {}
+        for method, r in method_results.items():
+            if method.startswith("_"):
+                continue
+            methods[method] = {
+                "scores": [float(s) for s in r["scores"]],
+                "preds":  [int(p) for p in r["preds"]],
+            }
+        payload[task] = {"labels": [int(l) for l in labels], "methods": methods}
+
+    with open(out_path, "w") as f:
+        json.dump(payload, f)
+    print(f"Raw per-instance scores saved → {out_path}")
+
+
 def print_classification_reports(task_results):
     for task, method_results in task_results.items():
         df_test = method_results["_test_df"]

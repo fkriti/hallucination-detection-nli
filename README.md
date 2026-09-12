@@ -51,15 +51,19 @@ validation split and applied unchanged to the test split.
 
 ```
 .
-├── main.py                  # Entry point: runs all 5 methods × 3 tasks
+├── main.py                            # Entry point: runs all 5 methods × 3 tasks
 ├── src/
-│   ├── data_loader.py       # Loads HaluEval (QA/dialogue/summarisation), val/test split
-│   ├── scorers.py           # All five detection methods + unified runner
-│   ├── evaluate.py          # Metrics, results table, error examples
-│   └── visualize.py         # Heatmaps, ROC curves, confusion matrices, score dists
+│   ├── data_loader.py                 # Loads HaluEval (QA/dialogue/summarisation), val/test split
+│   ├── scorers.py                     # All five detection methods + unified runner
+│   ├── evaluate.py                    # Metrics, results table, error examples, raw-score dump
+│   └── visualize.py                   # Heatmaps, ROC curves, confusion matrices, score dists
+├── experiment_truncation_ablation.py  # NLI premise budget sweep on summarisation
+├── experiment_chunk_aggregation.py    # SummaC-style chunk aggregation vs single-pass
+├── experiment_bootstrap_ci.py         # Bootstrap CIs + paired significance tests
+├── measure_throughput.py              # Measured CPU throughput per method
 ├── results/
-│   ├── metrics/all_tasks.csv   # Per-task, per-method metrics
-│   └── figures/                # Heatmaps, ROC, confusion matrices, score distributions
+│   ├── metrics/                       # all_tasks.csv, ablation/aggregation/CI results, raw scores
+│   └── figures/                       # Heatmaps, ROC, confusion matrices, score distributions
 └── requirements.txt
 ```
 
@@ -87,17 +91,39 @@ This will, for each of the three HaluEval tasks:
 3. Run all five detection methods, calibrating thresholds on validation.
 4. Save metrics to `results/metrics/all_tasks.csv` and figures to `results/figures/`.
 5. Print per-task classification reports and NLI error examples.
+6. Write per-instance scores to `results/metrics/raw_scores.json`.
+
+### Follow-up experiments
+
+Each script is standalone and writes to `results/metrics/`:
+
+```bash
+python experiment_truncation_ablation.py   # premise budget sweep (summarisation)
+python experiment_chunk_aggregation.py     # chunk aggregation vs single-pass
+python experiment_bootstrap_ci.py          # bootstrap CIs (needs raw_scores.json)
+python measure_throughput.py               # measured CPU throughput
+```
+
+`experiment_chunk_aggregation.py` runs on a 500-instance subset by default; set
+`CHUNK_AGG_FULL=1` to use the complete splits (several hours on CPU).
+`experiment_bootstrap_ci.py` reads the saved per-instance scores, so it needs no
+model inference and finishes in seconds.
 
 ## Key Findings
 
-- **Task-dependence:** No single method is best across all tasks. The ensemble
-  leads on QA, NLI on dialogue.
-- **Lexical beats semantic in-task:** TF-IDF-style overlap (ROUGE-L, BERTScore)
-  is competitive because HaluEval hallucinations carry a consistent lexical
-  signature.
-- **Summarisation is a systematic failure mode:** all methods fall to near-random
-  (AUC-ROC ≤ 0.574) because subtle factual edits hide inside long, mostly faithful
-  summaries that overlap metrics and a truncated NLI premise cannot localise.
+- **The ensemble is the most consistent method.** It ranks first on QA
+  (AUC-ROC 0.873) and on dialogue (0.749); NLI is the strongest *standalone*
+  method on dialogue (0.713). Paired bootstrap tests confirm both leads;
+  rankings on summarisation are **not** statistically resolved.
+- **Overlap metrics are competitive on short sources.** BERTScore edges ROUGE-L on
+  QA and both beat sentence-embedding similarity, because HaluEval hallucinations
+  carry a consistent lexical signature.
+- **Summarisation fails for single-pass scoring, not for lightweight methods as a
+  class.** All five methods land near chance (AUC-ROC ≤ 0.574), but that reflects
+  truncation: the NLI premise sees ~23% of a median 3,458-character document, and
+  DeBERTa's context window caps it at 512 tokens. Raising the budget to 1,600
+  characters gives 0.629, and SummaC-style chunk aggregation reaches **0.683** —
+  both still CPU-only with the same model.
 
 ## Citation
 
