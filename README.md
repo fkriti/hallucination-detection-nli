@@ -121,7 +121,8 @@ model inference and finishes in seconds.
 - **Summarisation fails for single-pass scoring, not for lightweight methods as a
   class.** All five methods land near chance (AUC-ROC ≤ 0.574), but that reflects
   truncation: the NLI premise sees ~23% of a median 3,458-character document, and
-  DeBERTa's context window caps it at 512 tokens. Raising the budget to 1,600
+  inputs beyond the checkpoint's configured 512 positions degrade its judgments.
+  Raising the budget to 1,600
   characters gives 0.629, and SummaC-style chunk aggregation reaches **0.683** —
   both still CPU-only with the same model.
 
